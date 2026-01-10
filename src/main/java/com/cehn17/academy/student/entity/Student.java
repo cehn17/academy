@@ -5,6 +5,7 @@ import com.cehn17.academy.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -34,6 +35,6 @@ public class Student {
     private User user;
 
     // Relación con las inscripciones (la crearemos luego)
-    @OneToMany(mappedBy = "student")
-    private List<Enrollment> enrollments;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Enrollment> enrollments = new ArrayList<>();
 }

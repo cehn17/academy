@@ -30,6 +30,4 @@ public enum RolePermission {
 
     READ_MY_PROFILE,
     UPDATE_MY_PROFILE;
-
-
 }
