@@ -11,10 +11,17 @@ public enum Role {
             RolePermission.CREATE_COURSE,
             RolePermission.UPDATE_COURSE,
             RolePermission.DELETE_COURSE,
+
             RolePermission.READ_ALL_STUDENTS,
             RolePermission.READ_ONE_STUDENT,
             RolePermission.DELETE_STUDENT,
+            RolePermission.UPDATE_ANY_STUDENT,
+
             RolePermission.READ_ALL_TEACHERS,
+            RolePermission.READ_ONE_TEACHER,
+            RolePermission.DELETE_TEACHER,
+            RolePermission.UPDATE_ANY_TEACHER,
+
             RolePermission.ADMIN_PANEL,
             RolePermission.READ_MY_PROFILE
     )),

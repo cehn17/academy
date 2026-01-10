@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,8 +36,8 @@ public class Teacher {
     private User user;
 
     // Relación con los horarios asignados (la crearemos luego)
-    @ManyToMany(mappedBy = "teachers")
-    private List<CourseSchedule> assignedSchedules;
+    @ManyToMany(mappedBy = "teachers", fetch = FetchType.LAZY)
+    private List<CourseSchedule> assignedSchedules = new ArrayList<>();
 
     // mappedBy = "teachers" debe coincidir con el nombre de la variable en la clase Course
     @ManyToMany(mappedBy = "teachers", fetch = FetchType.LAZY)

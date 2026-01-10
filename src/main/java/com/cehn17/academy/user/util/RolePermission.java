@@ -11,10 +11,14 @@ public enum RolePermission {
 
     // Permisos de Usuarios y Perfiles
     READ_ALL_STUDENTS,
-    READ_ALL_TEACHERS,
     READ_ONE_STUDENT,
     DELETE_STUDENT,
+    UPDATE_ANY_STUDENT,
 
+    READ_ALL_TEACHERS,
+    READ_ONE_TEACHER,
+    DELETE_TEACHER,
+    UPDATE_ANY_TEACHER,
 
     // Permisos de Inscripción y Académicos
     ENROLL_STUDENT,

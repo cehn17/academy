@@ -2,9 +2,9 @@ package com.cehn17.academy.teacher.mapper;
 
 import com.cehn17.academy.teacher.dto.TeacherRegisterRequest;
 import com.cehn17.academy.teacher.dto.TeacherResponseDTO;
+import com.cehn17.academy.teacher.dto.TeacherUpdateRequest;
 import com.cehn17.academy.teacher.entity.Teacher;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface TeacherMapper {
@@ -28,4 +28,12 @@ public interface TeacherMapper {
         if (course == null) return null;
         return course.getName();
     }
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "assignedSchedules", ignore = true)
+    @Mapping(target = "assignedCourses", ignore = true)
+    @Mapping(source = "specialty", target = "specialization")
+    void updateTeacherFromDto(TeacherUpdateRequest dto, @MappingTarget Teacher entity);
 }
