@@ -1,12 +1,12 @@
 package com.cehn17.academy.teacher.service;
 
 import com.cehn17.academy.teacher.dto.TeacherResponseDTO;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface TeacherService {
 
     TeacherResponseDTO getMyProfile(String username);
 
-    List<TeacherResponseDTO> findAll();
+    Page<TeacherResponseDTO> findAll(Pageable pageable);
 }

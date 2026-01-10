@@ -25,5 +25,8 @@ public interface StudentMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "user", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "dni", ignore = true)
+    @Mapping(target = "enrollments", ignore = true)
     void updateStudentFromDto(StudentUpdateRequest dto, @MappingTarget Student entity);
 }

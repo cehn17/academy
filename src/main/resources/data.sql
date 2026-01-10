@@ -59,6 +59,7 @@ VALUES (2, 'Python para Data Science', 'Análisis de datos e IA', true);
 INSERT INTO courses (id, name, description, active)
 VALUES (3, 'Seguridad Informática', 'Hacking ético y redes', false); -- Curso inactivo de ejemplo
 
+ALTER TABLE courses ALTER COLUMN id RESTART WITH 4;
 
 -- =================================================================================
 -- 4. RELACIÓN CURSO-PROFESOR (COURSE_TEACHERS - ManyToMany)

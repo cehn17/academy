@@ -1,14 +1,14 @@
 package com.cehn17.academy.teacher.service;
 
 import com.cehn17.academy.teacher.dto.TeacherResponseDTO;
+import com.cehn17.academy.teacher.entity.Teacher;
 import com.cehn17.academy.teacher.mapper.TeacherMapper;
 import com.cehn17.academy.teacher.repository.TeacherRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -26,9 +26,9 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<TeacherResponseDTO> findAll() {
-        return teacherRepository.findAll()
-                .stream().map(teacherMapper::toResponseDTO)
-                .collect(Collectors.toList());
+    public Page<TeacherResponseDTO> findAll(Pageable pageable) {
+
+        Page<Teacher> teacherPage = teacherRepository.findAll(pageable);
+        return teacherPage.map(teacherMapper::toResponseDTO);
     }
 }

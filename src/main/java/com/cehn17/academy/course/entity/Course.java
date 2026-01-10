@@ -30,6 +30,7 @@ public class Course {
     private boolean active = true;
 
     // RELACIÓN MANY-TO-MANY
+    @Builder.Default
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "course_teachers",

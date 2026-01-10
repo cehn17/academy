@@ -16,6 +16,8 @@ public interface UserMapper {
     User toEntity(UserRequest request);
 
     @Mapping(target = "authorities", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "password", ignore = true)
     void updateUserFromDto(UserRequest request, @MappingTarget User user);
 
 

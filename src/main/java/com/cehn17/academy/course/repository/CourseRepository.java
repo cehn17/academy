@@ -12,4 +12,6 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findByActiveTrue();
 
     List<Course> findByTeachersId(Long teacherId);
+
+    boolean existsByName(String name);
 }

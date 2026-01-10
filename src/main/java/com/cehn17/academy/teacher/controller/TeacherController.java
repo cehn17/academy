@@ -1,8 +1,12 @@
 package com.cehn17.academy.teacher.controller;
 
+import com.cehn17.academy.common.PaginatedResponse;
 import com.cehn17.academy.teacher.dto.TeacherResponseDTO;
 import com.cehn17.academy.teacher.service.TeacherService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -28,7 +32,10 @@ public class TeacherController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('READ_ALL_TEACHERS')")
-    public ResponseEntity<List<TeacherResponseDTO>> findAll() {
-        return ResponseEntity.ok(teacherService.findAll());
+    public ResponseEntity<PaginatedResponse<TeacherResponseDTO>> findAll(
+            @PageableDefault(page = 0, size = 10, sort = "lastName") Pageable pageable
+    ) {
+        Page<TeacherResponseDTO> page = teacherService.findAll(pageable);
+        return ResponseEntity.ok(new PaginatedResponse<>(page));
     }
 }
