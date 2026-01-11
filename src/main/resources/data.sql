@@ -88,6 +88,8 @@ VALUES (1, 1, '18:00:00', '22:00:00', 'Aula Virtual 1');
 INSERT INTO course_schedules (id, course_id, start_time, end_time, room)
 VALUES (2, 2, '09:00:00', '13:00:00', 'Laboratorio B');
 
+ALTER TABLE course_schedules ALTER COLUMN id RESTART WITH 3;
+
 
 -- =================================================================================
 -- 6. DÍAS DE CURSADA (SCHEDULE_DAYS - ElementCollection)

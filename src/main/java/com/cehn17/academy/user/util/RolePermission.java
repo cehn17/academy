@@ -20,6 +20,10 @@ public enum RolePermission {
     DELETE_TEACHER,
     UPDATE_ANY_TEACHER,
 
+    CREATE_SCHEDULE,
+    READ_ALL_SCHEDULES,
+    DELETE_SCHEDULE,
+
     // Permisos de Inscripción y Académicos
     ENROLL_STUDENT,
     UPDATE_GRADES,

@@ -22,6 +22,10 @@ public enum Role {
             RolePermission.DELETE_TEACHER,
             RolePermission.UPDATE_ANY_TEACHER,
 
+            RolePermission.CREATE_SCHEDULE,
+            RolePermission.DELETE_SCHEDULE,
+            RolePermission.READ_ALL_SCHEDULES,
+
             RolePermission.ADMIN_PANEL,
             RolePermission.READ_MY_PROFILE
     )),

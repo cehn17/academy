@@ -50,6 +50,6 @@ public class CourseSchedule {
     private LocalTime endTime;
     private String room;
 
-    @OneToMany(mappedBy = "courseSchedule")
+    @OneToMany(mappedBy = "courseSchedule", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Enrollment> enrollments;
 }
