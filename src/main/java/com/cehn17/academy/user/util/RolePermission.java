@@ -34,5 +34,11 @@ public enum RolePermission {
     ADMIN_PANEL,
 
     READ_MY_PROFILE,
-    UPDATE_MY_PROFILE;
+    UPDATE_MY_PROFILE,
+
+    //REVIES
+    READ_ALL_REVIEWS,
+    CREATE_REVIEW,
+    READ_MY_REVIEWS,
+    READ_ONE_REVIEW;
 }

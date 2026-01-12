@@ -26,6 +26,9 @@ public enum Role {
             RolePermission.DELETE_SCHEDULE,
             RolePermission.READ_ALL_SCHEDULES,
 
+            RolePermission.READ_ALL_REVIEWS,
+            RolePermission.READ_ONE_REVIEW,
+
             RolePermission.ADMIN_PANEL,
             RolePermission.READ_MY_PROFILE
     )),
@@ -46,7 +49,9 @@ public enum Role {
             RolePermission.CREATE_ENROLLMENT,
             RolePermission.ENROLL_STUDENT,
             RolePermission.READ_MY_PROFILE,
-            RolePermission.UPDATE_MY_PROFILE
+            RolePermission.UPDATE_MY_PROFILE,
+            RolePermission.CREATE_REVIEW,
+            RolePermission.READ_MY_REVIEWS
     ));
 
     private List<RolePermission> permissions;

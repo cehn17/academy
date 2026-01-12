@@ -18,7 +18,8 @@ public class TokenBlacklist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 512)
+    //@Column(nullable = false, unique = true, length = 2048)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String token;
 
     private LocalDateTime expirationDate;

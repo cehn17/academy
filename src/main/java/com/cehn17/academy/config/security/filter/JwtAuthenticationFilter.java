@@ -1,6 +1,7 @@
 package com.cehn17.academy.config.security.filter;
 
 
+import com.cehn17.academy.config.security.CustomAuthenticationEntryPoint;
 import com.cehn17.academy.config.security.blacklist.TokenBlacklistServiceImpl;
 import com.cehn17.academy.exception.ObjectNotFoundException;
 import com.cehn17.academy.user.entity.User;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
@@ -33,6 +35,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenBlacklistServiceImpl tokenBlacklistService;
 
+    @Autowired
+    private final CustomAuthenticationEntryPoint customEntryPoint;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
@@ -51,7 +56,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // --- VERIFICACIÓN DE BLACKLIST (NUEVO) ---
         // Si el token está en la lista negra, cortamos la ejecución aquí mismo.
         if (tokenBlacklistService.isTokenBlacklisted(jwt)) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // Devolvemos 401
+            AuthenticationException authException = new AuthenticationException("El token ha sido invalidado (Logout)") {};
+            customEntryPoint.commence(request, response, authException);
             return;
         }
 

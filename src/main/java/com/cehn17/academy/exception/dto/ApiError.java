@@ -3,52 +3,16 @@ package com.cehn17.academy.exception.dto;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class ApiError implements Serializable {
+public record ApiError(
+        String backendMessage,
+        String message,
+        String url,
+        String method,
+        LocalDateTime timestamp
+) implements Serializable {
 
-    private String backendMessage;
-    private String message;
-    private String url;
-    private String method;
-    private LocalDateTime timestamp;
-
-    public String getBackendMessage() {
-        return backendMessage;
-    }
-
-    public void setBackendMessage(String backendMessage) {
-        this.backendMessage = backendMessage;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
+    // Constructor de ayuda (sin timestamp, lo pone automático)
+    public ApiError(String backendMessage, String message, String url, String method) {
+        this(backendMessage, message, url, method, LocalDateTime.now());
     }
 }
-

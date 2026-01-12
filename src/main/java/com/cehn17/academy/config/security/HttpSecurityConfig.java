@@ -2,6 +2,7 @@ package com.cehn17.academy.config.security;
 
 import com.cehn17.academy.config.security.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -23,6 +24,8 @@ public class HttpSecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -35,9 +38,13 @@ public class HttpSecurityConfig {
                     auth.requestMatchers("/auth/login",
                             "/auth/register-student",
                             "/auth/register-teacher",
-                            "/auth/validate-token").permitAll();
+                            "/auth/validate-token",
+                            "/error").permitAll();
                     auth.anyRequest().authenticated();
                 } )
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(customAuthenticationEntryPoint)
+                )
                 .build();
     }
 }
