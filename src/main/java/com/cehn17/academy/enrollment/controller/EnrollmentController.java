@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/enrollments")
+@RequestMapping("/enrollments")
 @RequiredArgsConstructor
 public class EnrollmentController {
 
@@ -26,9 +26,14 @@ public class EnrollmentController {
     @PreAuthorize("hasAuthority('CREATE_ENROLLMENT')")
     public ResponseEntity<EnrollmentResponseDTO> enroll(@Valid @RequestBody EnrollmentRequest request,
                                                         Authentication authentication) {
-        String username = authentication.getName();
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(enrollmentService.enrollStudent(username, request));
+
+        EnrollmentResponseDTO response = enrollmentService.enrollStudent(authentication.getName(), request);
+
+        if (response.success()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+        }
     }
 
     // 2. VER MIS INSCRIPCIONES (GET)

@@ -43,6 +43,7 @@ public enum Role {
             RolePermission.READ_ALL_COURSES,
             RolePermission.READ_ONE_COURSE,
             RolePermission.READ_MY_ENROLLMENTS,
+            RolePermission.CREATE_ENROLLMENT,
             RolePermission.ENROLL_STUDENT,
             RolePermission.READ_MY_PROFILE,
             RolePermission.UPDATE_MY_PROFILE

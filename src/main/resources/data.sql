@@ -86,7 +86,7 @@ VALUES (1, 1, '18:00:00', '22:00:00', 'Aula Virtual 1');
 
 -- Horario 2: Python - Turno Mañana
 INSERT INTO course_schedules (id, course_id, start_time, end_time, room)
-VALUES (2, 2, '09:00:00', '13:00:00', 'Laboratorio B');
+VALUES (2, 2, '18:00:00', '22:00:00', 'Laboratorio B');
 
 ALTER TABLE course_schedules ALTER COLUMN id RESTART WITH 3;
 
@@ -100,7 +100,7 @@ INSERT INTO schedule_days (schedule_id, assigned_day) VALUES (1, 'MONDAY');
 INSERT INTO schedule_days (schedule_id, assigned_day) VALUES (1, 'WEDNESDAY');
 
 -- El Horario 2 (Python) es Martes y Jueves
-INSERT INTO schedule_days (schedule_id, assigned_day) VALUES (2, 'TUESDAY');
+INSERT INTO schedule_days (schedule_id, assigned_day) VALUES (2, 'MONDAY');
 INSERT INTO schedule_days (schedule_id, assigned_day) VALUES (2, 'THURSDAY');
 
 
@@ -118,9 +118,9 @@ INSERT INTO course_schedule_teachers (course_schedule_id, teacher_id) VALUES (2,
 -- =================================================================================
 
 -- Jesse se inscribe a Spring Boot (Horario 1)
-INSERT INTO enrollments (id, student_id, course_schedule_id, enrollment_date, status)
-VALUES (1, 1, 1, CURRENT_TIMESTAMP, 'ACTIVE');
+--INSERT INTO enrollments (id, student_id, course_schedule_id, enrollment_date, status)
+--VALUES (1, 1, 1, CURRENT_TIMESTAMP, 'ACTIVE');
 
 -- Kim se inscribe a Python (Horario 2)
-INSERT INTO enrollments (id, student_id, course_schedule_id, enrollment_date, status)
-VALUES (2, 2, 2, CURRENT_TIMESTAMP, 'ACTIVE');
+--INSERT INTO enrollments (id, student_id, course_schedule_id, enrollment_date, status)
+--VALUES (2, 2, 2, CURRENT_TIMESTAMP, 'ACTIVE');

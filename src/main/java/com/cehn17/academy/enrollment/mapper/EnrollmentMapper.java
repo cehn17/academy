@@ -18,8 +18,13 @@ public interface EnrollmentMapper {
     @Mapping(source = "student.user.username", target = "studentUsername")
     @Mapping(source = "courseSchedule.course.name", target = "courseName")
 
-    // Aquí usamos el método customizado de abajo
+    // Tu método customizado (Perfecto)
     @Mapping(source = "courseSchedule", target = "scheduleInfo", qualifiedByName = "formatSchedule")
+
+    // --- AGREGADO IMPORTANTE ---
+    // Cuando convertimos una entidad existente a DTO, asumimos que es un registro válido/exitoso
+    @Mapping(target = "success", constant = "true")
+    @Mapping(target = "message", constant = "Inscripción realizada con éxito")
     EnrollmentResponseDTO toResponseDTO(Enrollment enrollment);
 
 
@@ -32,25 +37,36 @@ public interface EnrollmentMapper {
     Enrollment toEntity(EnrollmentRequest request);
 
 
-
+    // 3. TU MÉTODO HELPER (Con un pequeño extra para español)
     @Named("formatSchedule")
     default String formatSchedule(CourseSchedule schedule) {
         if (schedule == null) return "Sin horario asignado";
 
-        // Paso A: Convertir la lista de Enums (MONDAY, FRIDAY) a un String ("LUNES, VIERNES")
-        // Nota: Por defecto saldrán en inglés (MONDAY). Si quieres español, podrías hacer un switch/map aquí.
         String daysString = "A confirmar";
         if (schedule.getDays() != null && !schedule.getDays().isEmpty()) {
+            // Truco rápido: Traducción simple al vuelo si quieres español
             daysString = schedule.getDays().stream()
-                    .map(Enum::name) // Obtiene "MONDAY", "TUESDAY"...
+                    .map(day -> translateDay(day.name()))
                     .collect(Collectors.joining(", "));
         }
 
-        // Paso B: Construir la frase completa
-        // Ej: "MONDAY, WEDNESDAY 18:00 - 22:00 (Aula 101)"
         return daysString + " " +
                 schedule.getStartTime() + " - " +
                 schedule.getEndTime() +
-                " (Aula: " + schedule.getRoom() + ")";
+                " (Aula: " + (schedule.getRoom() != null ? schedule.getRoom() : "TBA") + ")";
+    }
+
+    // Pequeño helper para traducir (opcional, si lo quieres en español)
+    default String translateDay(String dayInEnglish) {
+        return switch (dayInEnglish) {
+            case "MONDAY" -> "LUNES";
+            case "TUESDAY" -> "MARTES";
+            case "WEDNESDAY" -> "MIÉRCOLES";
+            case "THURSDAY" -> "JUEVES";
+            case "FRIDAY" -> "VIERNES";
+            case "SATURDAY" -> "SÁBADO";
+            case "SUNDAY" -> "DOMINGO";
+            default -> dayInEnglish;
+        };
     }
 }
