@@ -36,5 +36,6 @@ public class Student {
 
     // Relación con las inscripciones (la crearemos luego)
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<Enrollment> enrollments = new ArrayList<>();
 }

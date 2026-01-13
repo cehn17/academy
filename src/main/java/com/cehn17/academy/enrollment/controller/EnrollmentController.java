@@ -2,6 +2,8 @@ package com.cehn17.academy.enrollment.controller;
 
 import com.cehn17.academy.enrollment.dto.EnrollmentRequest;
 import com.cehn17.academy.enrollment.dto.EnrollmentResponseDTO;
+import com.cehn17.academy.enrollment.dto.GradeUpdateRequest;
+import com.cehn17.academy.enrollment.dto.GradeUpdateResponseDTO;
 import com.cehn17.academy.enrollment.service.EnrollmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -42,4 +44,15 @@ public class EnrollmentController {
     public ResponseEntity<List<EnrollmentResponseDTO>> getMyEnrollments(Authentication authentication) {
         return ResponseEntity.ok(enrollmentService.getMyEnrollments(authentication.getName()));
     }
+
+    @PatchMapping("/{id}/grade")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER')")
+    public ResponseEntity<GradeUpdateResponseDTO> updateGrade(
+            @PathVariable Long id,
+            @Valid @RequestBody GradeUpdateRequest request) {
+
+        return ResponseEntity.ok(enrollmentService.updateGrade(id, request));
+    }
+
+
 }

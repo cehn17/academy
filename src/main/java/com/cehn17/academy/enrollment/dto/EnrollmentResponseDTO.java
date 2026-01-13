@@ -13,6 +13,7 @@ public record EnrollmentResponseDTO(
         String studentUsername,
         LocalDateTime date,
         String status,
+        Double finalGrade,
 
         // Nuevos campos para manejar el resultado
         boolean success,       // true = inscrito, false = error

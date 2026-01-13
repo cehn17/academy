@@ -3,6 +3,7 @@ package com.cehn17.academy.enrollment.mapper;
 import com.cehn17.academy.courseschedule.entity.CourseSchedule;
 import com.cehn17.academy.enrollment.dto.EnrollmentRequest;
 import com.cehn17.academy.enrollment.dto.EnrollmentResponseDTO;
+import com.cehn17.academy.enrollment.dto.GradeUpdateResponseDTO;
 import com.cehn17.academy.enrollment.entity.Enrollment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -34,6 +35,7 @@ public interface EnrollmentMapper {
     @Mapping(target = "courseSchedule", ignore = true)
     @Mapping(target = "enrollmentDate", ignore = true)
     @Mapping(target = "status", constant = "ACTIVE")
+    @Mapping(target = "finalGrade", ignore = true)
     Enrollment toEntity(EnrollmentRequest request);
 
 
@@ -69,4 +71,15 @@ public interface EnrollmentMapper {
             default -> dayInEnglish;
         };
     }
+
+
+    // 1. DE ENTIDAD A DTO
+    @Mapping(source = "enrollmentDate", target = "date")
+    @Mapping(source = "student.user.username", target = "studentUsername")
+    @Mapping(source = "courseSchedule.course.name", target = "courseName")
+    @Mapping(source = "courseSchedule", target = "scheduleInfo", qualifiedByName = "formatSchedule")
+
+    @Mapping(target = "success", constant = "true")
+    @Mapping(target = "message", constant = "Nota cargada con éxito")
+    GradeUpdateResponseDTO toGradeResponseDTO(Enrollment enrollment);
 }

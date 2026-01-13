@@ -118,9 +118,9 @@ INSERT INTO course_schedule_teachers (course_schedule_id, teacher_id) VALUES (2,
 -- =================================================================================
 
 -- Jesse se inscribe a Spring Boot (Horario 1)
---INSERT INTO enrollments (id, student_id, course_schedule_id, enrollment_date, status)
---VALUES (1, 1, 1, CURRENT_TIMESTAMP, 'ACTIVE');
+INSERT INTO enrollments (id, student_id, course_schedule_id, enrollment_date, status)
+VALUES (1, 1, 1, CURRENT_TIMESTAMP, 'ACTIVE');
 
 -- Kim se inscribe a Python (Horario 2)
---INSERT INTO enrollments (id, student_id, course_schedule_id, enrollment_date, status)
---VALUES (2, 2, 2, CURRENT_TIMESTAMP, 'ACTIVE');
+INSERT INTO enrollments (id, student_id, course_schedule_id, enrollment_date, status)
+VALUES (2, 2, 2, CURRENT_TIMESTAMP, 'ACTIVE');

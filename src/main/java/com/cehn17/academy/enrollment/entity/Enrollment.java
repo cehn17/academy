@@ -31,4 +31,7 @@ public class Enrollment {
     private LocalDateTime enrollmentDate = LocalDateTime.now();
 
     private String status = "ACTIVE";
+
+    @Column(name = "final_grade")
+    private Double finalGrade;
 }

@@ -37,7 +37,7 @@ public class CourseSchedule {
             joinColumns = @JoinColumn(name = "course_schedule_id"),
             inverseJoinColumns = @JoinColumn(name = "teacher_id")
     )
-    private List<Teacher> teachers;
+    private List<Teacher> teachers = new ArrayList<>();
 
     @ElementCollection(targetClass = DayOfWeek.class)
     @CollectionTable(name = "schedule_days", joinColumns = @JoinColumn(name = "schedule_id"))
