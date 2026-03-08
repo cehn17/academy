@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
-@Tag(name = "Panel de Administrador", description = "Métricas y reportes globales")
+@Tag(name = "Administrator Panel", description = "Global metrics and reports")
 public class AdminController {
 
     private final AdminService adminService;
 
-    @Operation(summary = "Obtener estadísticas", description = "Devuelve contadores de usuarios, cursos y reviews.")
+    @Operation(summary = "Get statistics", description = "It returns counters for users, courses, and reviews.")
     @GetMapping("/stats")
     @PreAuthorize("hasAuthority('ADMIN_PANEL')")
     public ResponseEntity<AdminStatsDTO> getDashboardStats() {

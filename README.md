@@ -1,105 +1,375 @@
 # 🎓 Academy REST API
 
-Sistema de gestión académica backend desarrollado con **Java** y **Spring Boot**.
-Este proyecto implementa una arquitectura de base de datos **híbrida** para aprovechar lo mejor del mundo relacional (MySQL) y NoSQL (MongoDB), orquestado mediante **Docker**.
+Backend system for academic institution management built with **Java 17** and **Spring Boot 3**.
 
-## 🚀 Descripción del Proyecto
+The project implements a **hybrid persistence architecture** combining relational and NoSQL databases to leverage the strengths of both approaches.
 
-**Academy API** es una plataforma robusta diseñada para administrar instituciones educativas. Permite la gestión de alumnos, profesores, cursos e inscripciones, manteniendo la integridad de los datos académicos en MySQL.
-
-Simultáneamente, incorpora un módulo de **Reseñas y Encuestas** (Reviews) utilizando MongoDB, permitiendo flexibilidad y escalabilidad para el feedback de los alumnos, con reglas de negocio complejas para asegurar la unicidad por semestre académico.
-
-## 🛠️ Stack Tecnológico y Herramientas
-
-### Infraestructura & Desarrollo
-* **Docker & Docker Compose**: Orquestación de contenedores. Permite levantar las bases de datos (MySQL y MongoDB) de forma aislada y reproducible.
-* **IntelliJ IDEA**: Entorno de desarrollo (IDE).
-* **Git**: Control de versiones.
-* **Postman**: Pruebas de integración manuales y validación de flujos de seguridad (Bearer Token).
-
-### Backend & Framework
-* **Java 17+**: Lenguaje principal.
-* **Spring Boot 3**: Framework base para microservicios y APIs REST.
-* **Maven**: Gestión de dependencias.
-
-### Persistencia Híbrida
-* **MySQL (Spring Data JPA)**: Datos transaccionales (Usuarios, Cursos, Notas).
-* **MongoDB (Spring Data MongoDB)**: Datos flexibles (Reseñas/Encuestas).
-
-### Seguridad
-* **Spring Security**: Autorización basada en Roles (`ADMINISTRATOR`, `TEACHER`, `STUDENT`).
-* **JWT (JSON Web Tokens)**: Autenticación Stateless.
-* **Token Blacklist**: Logout seguro almacenando tokens invalidados en base de datos hasta su expiración.
-* **BCrypt**: Hashing de contraseñas.
+The system manages **students, teachers, courses, enrollments, courses schedule and reviews**, while ensuring secure authentication using **JWT** and role-based authorization.
 
 ---
 
-## ✨ Funcionalidades Clave
+# 🚀 Project Overview
 
-### 1. Autenticación Robusta
-* Registro, Login (JWT) y **Logout real** (lista negra de tokens).
-* Protección de endpoints mediante anotaciones `@PreAuthorize`.
+**Academy API** is designed to simulate a real academic management backend used by educational institutions.
 
-### 2. Módulo Académico (MySQL)
-* Gestión de Cursos y Usuarios.
-* **Inscripciones (Enrollments):** Vinculación segura alumno-curso.
-* **Carga de Notas (Grades):**
-    * Endpoint seguro `PATCH /enrollments/{id}/grade`.
-    * **Regla de Negocio:** Solo el profesor asignado a ese curso específico (o un Admin) tiene permisos para calificar.
+It supports:
 
-### 3. Módulo de Feedback (MongoDB)
-* Sistema de reseñas de alumnos a profesores.
-* **Índices Compuestos (`@CompoundIndex`):** Restricción a nivel de base de datos para garantizar que un alumno solo pueda opinar una vez por curso y por ciclo lectivo (Año + Semestre).
+* Student and teacher management
+* Course creation and enrollment
+* Grade assignment
+* Student feedback and reviews
+* Secure authentication and authorization
 
-### 4. Calidad de Código
-* **Manejo de Errores Global:** Respuestas JSON estandarizadas (RFC-like) usando `records` y `@RestControllerAdvice`.
-* **DTOs & Mappers:** Separación limpia entre Entidades y objetos de transferencia.
+The application uses **MySQL for transactional academic data** and **MongoDB for flexible feedback data**, orchestrated with **Docker**.
 
 ---
 
-## ⚙️ Instalación y Ejecución
+# 🏗️ System Architecture
 
-Puedes levantar el entorno completo utilizando Docker, sin necesidad de instalar bases de datos localmente.
+The backend follows a modular architecture with hybrid persistence.
 
-### Prerrequisitos
-* Java 17+.
-* Docker y Docker Compose.
-* Maven.
+```
+Client (Frontend / Postman)
+            │
+            ▼
+      Spring Boot API
+            │
+     ┌──────┴────────┐
+     ▼               ▼
+  MySQL           MongoDB
+Academic Data      Reviews
+```
 
-### Paso a Paso
+### MySQL
 
-1.  **Clonar el repositorio:**
-    ```bash
-    git clone [https://github.com/tu-usuario/academy-api.git](https://github.com/tu-usuario/academy-api.git)
-    cd academy-api
-    ```
+Stores transactional academic information:
 
-2.  **Levantar infraestructura (MySQL + MongoDB):**
-    Ejecuta en la raíz del proyecto:
-    ```bash
-    docker-compose up -d
-    ```
+* Users
+* Courses
+* Courses Schedule
+* Enrollments
+* Students
+* Teachers
 
-3.  **Ejecutar la aplicación:**
-    ```bash
-    mvn spring-boot:run
-    ```
+### MongoDB
 
-4.  **Acceder:**
-    * API: `http://localhost:9191/api/v1/`
-    * Documentación Swagger: `http://localhost:9191/api/v1/swagger-ui/index.html`
+Stores flexible data:
+
+* Teacher reviews
+
+---
+
+# 🛠️ Technology Stack
+
+## Backend
+
+* Java 17
+* Spring Boot 3
+* Spring Security
+* Spring Data JPA
+* Spring Data MongoDB
+* Maven
+
+## Infrastructure
+
+* Docker
+* Docker Compose
+
+## Databases
+
+* MySQL
+* MongoDB
+
+## Development Tools
+
+* IntelliJ IDEA
+* Git
+* Postman
 
 ---
 
-## 🗺️ Roadmap y Futuras Mejoras
+# 🔐 Security
 
-El proyecto es funcional y sigue una arquitectura profesional, con planes de evolución continua:
+Authentication and authorization are implemented using **Spring Security** and **JWT tokens**.
 
-* [ ] **Monitoreo (Actuator):** Panel de métricas de salud y rendimiento.
-* [ ] **Migración de BD (Flyway):** Versionado de esquemas SQL para reemplazar `ddl-auto`.
-* [ ] **Email Service:** Notificaciones asíncronas para recuperación de contraseñas.
-* [ ] **Testing Automático:** Integración de **Testcontainers** para CI/CD.
-* [ ] **Frontend:** Desarrollo de cliente web (React/Angular).
+### Features
+
+* Stateless authentication
+* Role-based authorization
+* Password hashing with BCrypt
+* Secure logout using **token blacklist**
+* Method-level security using `@PreAuthorize`
+
+### Roles
+
+```
+ADMINISTRATOR
+TEACHER
+STUDENT
+```
 
 ---
-*Desarrollado con mucho esfuerzo por Cesar Niveyro*
+
+# 📚 API Documentation
+
+The API is documented using **Swagger / OpenAPI**.
+
+After starting the application, the interactive documentation is available at:
+
+```
+http://localhost:9191/api/v1/swagger-ui/index.html
+```
+
+Swagger allows you to:
+
+* Explore all endpoints
+* Inspect request and response schemas
+* Test endpoints directly from the browser
+
+---
+
+# 📊 Monitoring (Spring Boot Actuator)
+
+The application includes **Spring Boot Actuator** for basic monitoring and health checks.
+
+Available endpoints:
+
+```
+GET /actuator/health
+GET /actuator/info
+GET /actuator/metrics
+```
+
+Example:
+
+```
+http://localhost:9191/api/v1/actuator/health
+```
+
+These endpoints help monitor the application status and are commonly used in production environments.
+
+---
+
+# ✨ Core Functionalities
+
+## Authentication
+
+```
+POST /auth/register-student
+POST /auth/register-teacher
+POST /auth/login
+POST /auth/logout
+GET  /auth/validate-token
+```
+
+Provides secure JWT authentication and token invalidation on logout.
+
+---
+
+## Course
+
+```
+GET    /courses
+POST   /courses
+PUT    /courses/{id}
+DELETE /courses/{id}
+```
+
+---
+
+## Course Schedule
+
+```
+GET    /schedules
+POST   /schedules
+PUT    /schedules/{courseId}
+DELETE /schedules/{id}
+```
+
+---
+
+## Enrollments
+
+```
+POST  /enrollments
+GET   /enrollments/me
+PATCH /enrollments/{id}/grade
+```
+
+---
+
+## Students
+
+```
+GET    /students/me
+PUT    /students/me
+GET    /students
+GET    /students/{id}
+POST   /students
+PUT    /students/{id}
+DELETE /students/{id}
+```
+
+---
+
+## Teachers
+
+```
+GET    /teachers/me
+PUT    /teachers/me
+GET    /teachers
+POST   /teachers
+PUT    /teachers/{id}
+DELETE /teachers/{id}
+```
+
+### Business Rule
+
+Only the **assigned teacher** or an **administrator** can assign grades to a student enrollment.
+
+---
+
+## Teacher Reviews (MongoDB)
+
+```
+POST /reviews
+GET  /reviews
+GET  /reviews/{id}
+GET  /reviews/my-reviews
+```
+
+The review system uses **MongoDB compound indexes** to enforce the rule:
+
+> A student can review a teacher only once per course and academic semester.
+
+---
+
+# 📁 Project Structure
+
+The project follows a **modular domain-based architecture**.
+
+```
+src/main/java/com/cehn17/academy
+
+admin
+common
+config
+course
+courseschedule
+enrollment
+exception
+student
+teacher
+teacherreview
+user
+```
+
+Each module typically contains:
+
+```
+controller
+service
+repository
+entity
+dto
+mapper
+```
+
+This approach improves **maintainability, scalability and separation of concerns**.
+
+---
+
+# ⚙️ Installation & Running
+
+You can run the entire environment locally using **Docker**.
+
+## Prerequisites
+
+* Java 17+
+* Maven
+* Docker
+* Docker Compose
+
+---
+
+## 1️⃣ Clone the repository
+
+```
+git clone https://github.com/cehn17/academy-api.git
+cd academy-api
+```
+
+---
+
+## 2️⃣ Start the databases
+
+```
+docker-compose up -d
+```
+
+This starts:
+
+* MySQL
+* MongoDB
+
+---
+
+## 3️⃣ Run the application
+
+```
+mvn spring-boot:run
+```
+
+---
+
+## 4️⃣ Access the API
+
+API Base URL:
+
+```
+http://localhost:9191/api/v1
+```
+
+Swagger Documentation:
+
+```
+http://localhost:9191/api/v1/swagger-ui/index.html
+```
+
+---
+
+# 🧪 Testing the API
+
+The API can be tested using:
+
+* Swagger UI
+* Postman
+* cURL
+
+Swagger is recommended for quickly exploring the endpoints.
+
+---
+
+# 🗺️ Roadmap / Future Improvements
+
+The project is functional and follows a professional architecture, with plans for continuous evolution:
+
+* **Database Migration (Flyway):** SQL schema versioning to replace `ddl-auto`.
+* **Email Service:** Asynchronous notifications for password recovery.
+* **Automated Testing:** Integration of **TestContainers** for CI/CD.
+* **Frontend:** Web client development (React/Angular).
+
+---
+
+# 👨‍💻 Author
+
+**Cesar Niveyro**
+
+Backend Developer — Java / Spring Boot
+
+GitHub
+https://github.com/cehn17
+
+---
+
+⭐ If you find this project interesting, feel free to explore the code or suggest improvements.
