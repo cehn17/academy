@@ -4,9 +4,10 @@ import com.cehn17.academy.common.PaginatedResponse;
 import com.cehn17.academy.student.dto.StudentResponseDTO;
 import com.cehn17.academy.student.dto.StudentUpdateRequest;
 import com.cehn17.academy.student.service.StudentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -15,15 +16,15 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/students")
 @RequiredArgsConstructor
+@Tag(name = "Student Controller", description = "Operations for student profile management and administrative student control")
 public class StudentController {
 
     private final StudentService studentService;
 
+    @Operation(summary = "Get my profile", description = "Retrieves the personal profile information of the currently authenticated student.")
     @GetMapping("/me")
     @PreAuthorize("hasAuthority('READ_MY_PROFILE')")
     public ResponseEntity<StudentResponseDTO> getMyProfile(Authentication authentication) {
@@ -31,6 +32,7 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getMyProfile(username));
     }
 
+    @Operation(summary = "Update my profile", description = "Allows the authenticated student to update their own profile details.")
     @PutMapping("/me")
     @PreAuthorize("hasAuthority('UPDATE_MY_PROFILE')")
     public ResponseEntity<StudentResponseDTO> updateMyProfile(
@@ -44,6 +46,7 @@ public class StudentController {
     // --- ÁREA ADMINISTRATIVA (Para Teachers y Admins) ---
     // El alumno NO tiene el permiso 'READ_ALL_STUDENTS' en su Enum, así que no podrá entrar aquí.
 
+    @Operation(summary = "Get all students", description = "Retrieves a paginated list of all students registered in the system. Restricted to staff with READ_ALL_STUDENTS authority.")
     @GetMapping
     @PreAuthorize("hasAuthority('READ_ALL_STUDENTS')")
     public ResponseEntity<PaginatedResponse<StudentResponseDTO>> getAllStudents(
@@ -54,12 +57,14 @@ public class StudentController {
         return ResponseEntity.ok(new PaginatedResponse<>(page));
     }
 
+    @Operation(summary = "Get student by ID", description = "Retrieves detailed information of a specific student using their unique ID.")
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('READ_ONE_STUDENT')")
     public ResponseEntity<StudentResponseDTO> getStudentById(@PathVariable Long id) {
         return ResponseEntity.ok(studentService.getStudentById(id));
     }
 
+    @Operation(summary = "Delete student", description = "Permanently removes a student record from the system. Requires DELETE_STUDENT authority.")
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('DELETE_STUDENT')")
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
@@ -67,6 +72,7 @@ public class StudentController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Update student by Admin", description = "Allows an administrator to modify any student's information by their ID.")
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('UPDATE_ANY_STUDENT')")
     public ResponseEntity<StudentResponseDTO> updateStudentByAdmin(
