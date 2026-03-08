@@ -39,7 +39,13 @@ public class HttpSecurityConfig {
                             "/auth/register-student",
                             "/auth/register-teacher",
                             "/auth/validate-token",
-                            "/error").permitAll();
+                            "/error",
+                            "/v3/api-docs/**",
+                            "/swagger-ui/**",
+                            "/swagger-ui.html",
+                            "/actuator/health",
+                            "/actuator/info",
+                            "/actuator/metrics").permitAll();
                     auth.anyRequest().authenticated();
                 } )
                 .exceptionHandling(exception -> exception

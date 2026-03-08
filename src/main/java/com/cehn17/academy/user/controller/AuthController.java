@@ -48,7 +48,7 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<Map<?, ?>> logout(HttpServletRequest request) {
+    public ResponseEntity<Map<String, String>> logout(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             // Blacklist logic

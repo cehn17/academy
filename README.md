@@ -86,8 +86,8 @@ Puedes levantar el entorno completo utilizando Docker, sin necesidad de instalar
     ```
 
 4.  **Acceder:**
-    * API: `http://localhost:9191`
-    * Documentación Swagger (Proximamente): `http://localhost:9191/swagger-ui.html`
+    * API: `http://localhost:9191/api/v1/`
+    * Documentación Swagger: `http://localhost:9191/api/v1/swagger-ui/index.html`
 
 ---
 
